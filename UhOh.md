@@ -26,15 +26,16 @@ masterdark = ccdproc.combine(dark, method='average', unit=u.electron)
 Cmasterdark = ccdproc.subtract_bias(masterdark, masterbias)
 Cmasterdark.write('FinalCCD_MasterDark.fits')
 
-### this is where the certainty ends ###
- 
 sciframes = glob.glob('NGC0695.00**.fits')
-for i in sciframes:
-	Sciccd =  astropy.nddata.CCDData.read(i, unit='electron')
-	nbsci = ccdproc.subtract_bias(sciccd, masterbias)
+for imgfname in sciframes:
+	ccdsci = astropy.nddata.CCDData.read(imgfname, unit='electron')
+	ccdsci-b = ccdproc.subtract_bias(ccdsci, masterbias)
+	ccdsci-bf = ccdproc.flat_correct(ccdsci-b, Cmasterflat)
+	nwname = i.split('.fits')
+	mstrname = nwname[0] + 'bfcorrected.fits'
+	ccdsci-bf.write(mstrname)
 
-Sciccd1 = astropy.nddata.CCDData.read('NGC0695.0001.fits', unit='electron')
-nbsci1 = ccdproc.subtract_bias(sciccd1, masterbias)
-
+   ###imgfname is image file name; -b is minus bias; -bf is minus bias and flat; nwname
+	is new name, mstrname is master name###
 
  
