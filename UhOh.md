@@ -31,7 +31,7 @@ for imgfname in sciframes:
 	ccdsci = astropy.nddata.CCDData.read(imgfname, unit='electron')
 	ccdsci-b = ccdproc.subtract_bias(ccdsci, masterbias)
 	ccdsci-bf = ccdproc.flat_correct(ccdsci-b, Cmasterflat)
-	nwname = i.split('.fits')
+	nwname = imgfname.split('.fits')
 	mstrname = nwname[0] + 'bfcorrected.fits'
 	ccdsci-bf.write(mstrname)
 
